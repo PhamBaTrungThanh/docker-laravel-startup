@@ -17,7 +17,6 @@ if [ ! -d "/var/www/vendor" ]; then \
 else
     # SYMLINK CONFIGURATION FILES.
     ln -s /etc/php7/php.ini /etc/php7/conf.d/php.ini
-    ln -s /etc/nginx/sites-available/default.conf /etc/nginx/sites-enabled/default.conf
     # PRODUCTION LEVEL CONFIGURATION.
     if [[ "${PRODUCTION}" == "1" ]]; then
         sed -i -e "s/;log_level = notice/log_level = warning/g" /etc/php7/php-fpm.conf

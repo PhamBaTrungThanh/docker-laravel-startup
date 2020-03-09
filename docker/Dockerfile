@@ -79,7 +79,7 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" &&
 ADD start.sh /start.sh
 ADD supervisord/supervisord.conf /etc/supervisord.conf
 ADD php/php.ini /etc/php7/php.ini
-ADD nginx/app.conf /etc/nginx/sites-available/default.conf
+ADD nginx/app.conf /etc/nginx/conf.d/laravel.conf
 
 RUN chmod 755 /start.sh
 
