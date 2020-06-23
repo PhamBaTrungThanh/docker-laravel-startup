@@ -16,6 +16,7 @@ RUN apk add --update --no-cache curl ca-certificates \
     supervisor \
     shadow \
     rsync \
+    sqlite3 \
     sudo
 
 # trust this project public key to trust the packages.
@@ -42,6 +43,8 @@ RUN apk add --no-cache --update php-fpm@php \
     php-mysqli@php \
     php-mysqlnd@php \
     php-pdo_mysql@php \
+    php-pdo_sqlite@php \
+    php-sqlite@php \
     php-mbstring@php \
     php-phar@php \
     php-session@php \
