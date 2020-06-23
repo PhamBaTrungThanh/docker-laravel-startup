@@ -84,12 +84,10 @@ ADD nginx/app.conf /etc/nginx/conf.d/laravel.conf
 RUN chmod 755 /start.sh
 
 
-# SET THE WORK DIRECTORY.
-
 
 # IF USER_ID IS SET, RECREATE www-data WITH USER_ID:GROUP_ID
 RUN if [ ${USER_ID:-0} -ne 0 ] && [ ${GROUP_ID:-0} -ne 0 ]; then \
-    userdel -f www-data &&\
+    if  getent passwd www-data > /dev/null 2>&1 ; then userdel -f www-data; fi &&\
     if getent group www-data ; then groupdel www-data; fi &&\
     groupadd -g ${GROUP_ID} www-data &&\
     useradd -l -u ${USER_ID} -g www-data www-data &&\
@@ -97,17 +95,14 @@ RUN if [ ${USER_ID:-0} -ne 0 ] && [ ${GROUP_ID:-0} -ne 0 ]; then \
     chown --changes --silent --no-dereference --recursive \
     ${USER_ID}:${GROUP_ID} \
     /home/www-data \
-    /.composer \
     /var/www \
-    /var/run/php-fpm \
-    /var/lib/php/sessions \
     /var/log/php7 \
     /var/log/nginx/error.log \
     /var/log/nginx/access.log \
     ;fi
 
+
+# SET THE WORK DIRECTORY.
 WORKDIR /var/www
-
-
 
 ENTRYPOINT  ["/start.sh"]
