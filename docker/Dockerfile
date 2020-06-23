@@ -103,13 +103,13 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" &&
     php -r "unlink('composer-setup.php');"
 
 
-RUN chmod 755 /start.sh
-
-
-
-
+RUN composer global require laravel/installer
 
 # SET THE WORK DIRECTORY.
 WORKDIR /var/www
+
+RUN laravel new
+RUN chmod 755 /start.sh
+
 
 ENTRYPOINT  ["/start.sh"]
