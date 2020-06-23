@@ -56,13 +56,15 @@ RUN apk add --no-cache --update php-fpm@php \
     php-posix@php \
     php-xmlreader@php \
     php-zip@php \
+    php-zlib@php \
     php-xml@php && \
     ln -s /usr/bin/php7 /usr/bin/php
-
+ 
+# FIX iconv EXTENSIONS
 RUN apk add gnu-libiconv --update-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/community/ --allow-untrusted
 
 ENV LD_PRELOAD /usr/lib/preloadable_libiconv.so php
-# END Fix iconv extension
+
 
 # CONFIGURE WEB SERVER.
 RUN mkdir -p /var/www && \
