@@ -75,20 +75,11 @@ RUN mkdir -p /var/www && \
     mkdir -p /etc/nginx/sites-available && \
     rm /etc/php7/php.ini
 
-# INSTALL COMPOSER.
-RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
-    php composer-setup.php --install-dir=/usr/bin --filename=composer && \
-    php -r "unlink('composer-setup.php');"
-
 # ADD START SCRIPT, SUPERVISOR CONFIG, NGINX CONFIG AND RUN SCRIPTS.
 ADD start.sh /start.sh
 ADD supervisord/supervisord.conf /etc/supervisord.conf
 ADD php/php.ini /etc/php7/php.ini
 ADD nginx/app.conf /etc/nginx/conf.d/laravel.conf
-
-RUN chmod 755 /start.sh
-
-
 
 # IF USER_ID IS SET, RECREATE www-data WITH USER_ID:GROUP_ID
 RUN if [ ${USER_ID:-0} -ne 0 ] && [ ${GROUP_ID:-0} -ne 0 ]; then \
@@ -105,6 +96,17 @@ RUN if [ ${USER_ID:-0} -ne 0 ] && [ ${GROUP_ID:-0} -ne 0 ]; then \
     /var/log/nginx/error.log \
     /var/log/nginx/access.log \
     ;fi
+
+# INSTALL COMPOSER.
+RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
+    php composer-setup.php --install-dir=/usr/bin --filename=composer && \
+    php -r "unlink('composer-setup.php');"
+
+
+RUN chmod 755 /start.sh
+
+
+
 
 
 # SET THE WORK DIRECTORY.
