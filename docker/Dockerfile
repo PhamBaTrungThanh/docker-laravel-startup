@@ -73,15 +73,13 @@ RUN mkdir -p /var/www && \
     mkdir -p /run/nginx && \
     mkdir -p /var/log/supervisor && \
     mkdir -p /etc/nginx/sites-enabled && \
-    mkdir -p /etc/nginx/sites-available && \
-    rm /etc/php7/php.ini
+    mkdir -p /etc/nginx/sites-available
 
 # ADD START SCRIPT, SUPERVISOR CONFIG, NGINX CONFIG AND RUN SCRIPTS.
 ADD start.sh /start.sh
 ADD supervisord/supervisord.conf /etc/supervisord.conf
-ADD php/php.ini /etc/php7/php.ini
+ADD php/php.ini /etc/php7/conf.d/custom.ini
 ADD nginx/app.conf /etc/nginx/conf.d/laravel.conf
-
 # IF USER_ID IS SET, RECREATE www-data WITH USER_ID:GROUP_ID
 RUN if [ ${USER_ID:-0} -ne 0 ] && [ ${GROUP_ID:-0} -ne 0 ]; then \
     if  getent passwd www-data > /dev/null 2>&1 ; then userdel -f www-data; fi &&\
