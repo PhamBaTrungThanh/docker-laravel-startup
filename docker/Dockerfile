@@ -1,10 +1,11 @@
-FROM nginx:1.17.8-alpine
+FROM nginx:1.19-alpine
 
 LABEL maintainer="Pham Ba Trung Thanh <phambatrungthanh@gmail.com>"
 
 # IMAGE ARGUMENTS WITH DEFAULTS.
 ARG PHP_VERSION=7.4
-ARG ALPINE_VERSION=3.9
+ARG ALPINE_VERSION=3.11 
+# codecasts php-alpine for alpine version 3.12 has a problem, using v3.11 instead
 ARG COMPOSER_HASH=a5c698ffe4b8e849a443b120cd5ba38043260d5c4023dbf93e1558871f1f07f58274fc6f4c93bcfd858c6bd0775cd8d1
 
 ARG USER_ID
