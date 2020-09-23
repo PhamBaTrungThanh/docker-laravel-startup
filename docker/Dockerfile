@@ -60,7 +60,7 @@ RUN apk add --no-cache --update php-fpm@php \
     php-zlib@php \
     php-xml@php && \
     ln -s /usr/bin/php7 /usr/bin/php
- 
+
 # FIX iconv EXTENSIONS
 RUN apk add gnu-libiconv --update-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/community/ --allow-untrusted
 
